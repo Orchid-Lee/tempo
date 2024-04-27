@@ -3,6 +3,7 @@ package com.cappielloantonio.tempo;
 import android.app.Application;
 import android.content.Context;
 import android.content.SharedPreferences;
+import android.util.Log;
 
 import androidx.preference.PreferenceManager;
 
@@ -62,11 +63,17 @@ public class App extends Application {
     }
 
     private static Subsonic getSubsonicClient() {
+        //服务器
         String server = Preferences.getServer();
+        //用户名
         String username = Preferences.getUser();
+        //密码
         String password = Preferences.getPassword();
+        //token
         String token = Preferences.getToken();
+        //salt
         String salt = Preferences.getSalt();
+        Log.d("Sonic:", "SV:"+server+", US:"+username+", TK"+token+", salt:"+salt);
         boolean isLowSecurity = Preferences.isLowScurity();
 
         SubsonicPreferences preferences = new SubsonicPreferences();

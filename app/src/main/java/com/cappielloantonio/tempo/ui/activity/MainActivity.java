@@ -54,11 +54,12 @@ public class MainActivity extends BaseActivity {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
+        //初始化第一屏
         SplashScreen.installSplashScreen(this);
         DynamicColors.applyToActivityIfAvailable(this);
 
         super.onCreate(savedInstanceState);
-
+        //界面填充
         bind = ActivityMainBinding.inflate(getLayoutInflater());
         View view = bind.getRoot();
         setContentView(view);

@@ -16,6 +16,7 @@ import com.cappielloantonio.tempo.util.Preferences;
 public class CustomGlideModule extends AppGlideModule {
     @Override
     public void applyOptions(@NonNull Context context, GlideBuilder builder) {
+        //磁盘缓存
         int diskCacheSize = Preferences.getImageCacheSize() * 1024 * 1024;
         builder.setDiskCache(new InternalCacheDiskCacheFactory(context, "cache", diskCacheSize));
         builder.setDefaultRequestOptions(new RequestOptions().format(DecodeFormat.PREFER_RGB_565));

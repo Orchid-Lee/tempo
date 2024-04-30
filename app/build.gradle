@@ -97,4 +97,8 @@ dependencies {
     implementation 'com.squareup.retrofit2:retrofit:2.10.0'
     implementation 'com.squareup.okhttp3:logging-interceptor:5.0.0-alpha.12'
     implementation 'com.squareup.retrofit2:converter-gson:2.10.0'
+    //通过OKhttp拦截器机制,实现网络请求通知栏展示功能
+    debugImplementation 'com.github.chuckerteam.chucker:library:4.0.0'
+    releaseImplementation 'com.github.chuckerteam.chucker:library-no-op:4.0.0'
+    testImplementation 'junit:junit:4.13.2'
 }

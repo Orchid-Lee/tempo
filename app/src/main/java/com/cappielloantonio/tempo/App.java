@@ -26,7 +26,7 @@ public class App extends Application {
         String themePref = sharedPreferences.getString(Preferences.THEME, ThemeHelper.DEFAULT_MODE);
         ThemeHelper.applyTheme(themePref);
 
-        instance = new App();
+        instance = this;
         context = getApplicationContext();
         preferences = PreferenceManager.getDefaultSharedPreferences(context);
     }

@@ -1,7 +1,9 @@
 package com.cappielloantonio.tempo.subsonic
 
+import android.util.Log
 import com.cappielloantonio.tempo.App
 import com.cappielloantonio.tempo.subsonic.utils.CacheUtil
+import com.chuckerteam.chucker.api.ChuckerInterceptor
 import com.google.gson.GsonBuilder
 import okhttp3.Cache
 import okhttp3.OkHttpClient
@@ -16,7 +18,11 @@ class RetrofitClient(subsonic: Subsonic) {
     init {
         retrofit = Retrofit.Builder()
             .baseUrl(subsonic.url)
-            .addConverterFactory(GsonConverterFactory.create(GsonBuilder().setDateFormat("yyyy-MM-dd'T'HH:mm:ss").create()))
+            .addConverterFactory(
+                GsonConverterFactory.create(
+                    GsonBuilder().setDateFormat("yyyy-MM-dd'T'HH:mm:ss").create()
+                )
+            )
             .addConverterFactory(GsonConverterFactory.create(GsonBuilder().setLenient().create()))
             .client(getOkHttpClient())
             .build()
@@ -34,7 +40,8 @@ class RetrofitClient(subsonic: Subsonic) {
         // SearchClient 60
         // SystemClient 60
         // AlbumSongListClient 60
-
+        val instance = App.getInstance()
+        Log.d("LeeIns:", "getOkHttpClient: " + instance)
         return OkHttpClient.Builder()
             .callTimeout(2, TimeUnit.MINUTES)
             .connectTimeout(20, TimeUnit.SECONDS)
@@ -44,6 +51,7 @@ class RetrofitClient(subsonic: Subsonic) {
             .addInterceptor(cacheUtil.offlineInterceptor)
             // .addNetworkInterceptor(cacheUtil.onlineInterceptor)
             .cache(getCache())
+            .addNetworkInterceptor(ChuckerInterceptor.Builder(instance).build())
             .build()
     }
 

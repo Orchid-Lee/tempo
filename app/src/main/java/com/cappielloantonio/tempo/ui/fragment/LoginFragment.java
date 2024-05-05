@@ -1,6 +1,7 @@
 package com.cappielloantonio.tempo.ui.fragment;
 
 import android.os.Bundle;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuInflater;
@@ -62,6 +63,7 @@ public class LoginFragment extends Fragment implements ClickCallback {
         View view = bind.getRoot();
 
         initAppBar();
+        //初始化服务器列表信息
         initServerListView();
 
         return view;
@@ -93,6 +95,7 @@ public class LoginFragment extends Fragment implements ClickCallback {
         bind.serverListRecyclerView.setAdapter(serverAdapter);
         loginViewModel.getServerList().observe(getViewLifecycleOwner(), servers -> {
             if (!servers.isEmpty()) {
+                Log.d(TAG, "initServerListView: " + servers);
                 if (bind != null) bind.noServerAddedTextView.setVisibility(View.GONE);
                 if (bind != null) bind.serverListRecyclerView.setVisibility(View.VISIBLE);
                 serverAdapter.setItems(servers);
@@ -117,6 +120,8 @@ public class LoginFragment extends Fragment implements ClickCallback {
     @Override
     public void onServerClick(Bundle bundle) {
         Server server = bundle.getParcelable("server_object");
+        Log.d(TAG, "onServerClick: "+server);
+        //保存账号密码信息到Preference
         saveServerPreference(server.getServerId(), server.getAddress(), server.getUsername(), server.getPassword(), server.isLowSecurity());
 
         SystemRepository systemRepository = new SystemRepository();

@@ -91,7 +91,6 @@ public class SongRepository {
                         if (response.isSuccessful() && response.body() != null && response.body().getSubsonicResponse().getRandomSongs() != null && response.body().getSubsonicResponse().getRandomSongs().getSongs() != null) {
                             songs.addAll(response.body().getSubsonicResponse().getRandomSongs().getSongs());
                         }
-
                         randomSongsSample.setValue(songs);
                     }
 

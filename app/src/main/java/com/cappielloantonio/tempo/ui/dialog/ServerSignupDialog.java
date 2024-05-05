@@ -3,6 +3,7 @@ package com.cappielloantonio.tempo.ui.dialog;
 import android.app.Dialog;
 import android.os.Bundle;
 import android.text.TextUtils;
+import android.util.Log;
 
 import androidx.annotation.NonNull;
 import androidx.fragment.app.DialogFragment;
@@ -30,6 +31,13 @@ public class ServerSignupDialog extends DialogFragment {
     private String server;
     private boolean lowSecurity = false;
 
+    /**
+     * 登录弹窗
+     *
+     * @param savedInstanceState The last saved instance state of the Fragment,
+     *                           or null if this is a freshly created Fragment.
+     * @return
+     */
     @NonNull
     @Override
     public Dialog onCreateDialog(Bundle savedInstanceState) {
@@ -40,8 +48,10 @@ public class ServerSignupDialog extends DialogFragment {
         return new MaterialAlertDialogBuilder(getActivity())
                 .setView(bind.getRoot())
                 .setTitle(R.string.server_signup_dialog_title)
-                .setNeutralButton(R.string.server_signup_dialog_neutral_button, (dialog, id) -> { })
-                .setPositiveButton(R.string.server_signup_dialog_positive_button, (dialog, id) -> { })
+                .setNeutralButton(R.string.server_signup_dialog_neutral_button, (dialog, id) -> {
+                })
+                .setPositiveButton(R.string.server_signup_dialog_positive_button, (dialog, id) -> {
+                })
                 .setNegativeButton(R.string.server_signup_dialog_negative_button, (dialog, id) -> dialog.cancel())
                 .create();
     }
@@ -76,11 +86,15 @@ public class ServerSignupDialog extends DialogFragment {
         }
     }
 
+    /**
+     * 链接服务器配置
+     */
     private void setButtonAction() {
         androidx.appcompat.app.AlertDialog alertDialog = (androidx.appcompat.app.AlertDialog) Objects.requireNonNull(getDialog());
 
         alertDialog.getButton(androidx.appcompat.app.AlertDialog.BUTTON_POSITIVE).setOnClickListener(v -> {
             if (validateInput()) {
+                //保存配置信息
                 saveServerPreference();
                 Objects.requireNonNull(getDialog()).dismiss();
             }
@@ -124,6 +138,7 @@ public class ServerSignupDialog extends DialogFragment {
 
     private void saveServerPreference() {
         String serverID = loginViewModel.getServerToEdit() != null ? loginViewModel.getServerToEdit().getServerId() : UUID.randomUUID().toString();
+        Log.d(TAG, "saveServerPreference: " + this.serverName + ", username:" + this.username + ", password:" + this.password);
         loginViewModel.addServer(new Server(serverID, this.serverName, this.username, this.password, this.server, System.currentTimeMillis(), this.lowSecurity));
     }
 }

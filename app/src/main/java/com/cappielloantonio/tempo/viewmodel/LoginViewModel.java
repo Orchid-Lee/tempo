@@ -16,6 +16,10 @@ public class LoginViewModel extends AndroidViewModel {
 
     private Server toEdit = null;
 
+    /**
+     * 登录时初始化ServerRepository
+     * @param application
+     */
     public LoginViewModel(@NonNull Application application) {
         super(application);
 

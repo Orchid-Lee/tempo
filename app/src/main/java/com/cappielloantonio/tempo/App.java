@@ -21,7 +21,7 @@ public class App extends Application {
     @Override
     public void onCreate() {
         super.onCreate();
-
+        //Initialize SharedPreferences
         SharedPreferences sharedPreferences = PreferenceManager.getDefaultSharedPreferences(getApplicationContext());
         String themePref = sharedPreferences.getString(Preferences.THEME, ThemeHelper.DEFAULT_MODE);
         ThemeHelper.applyTheme(themePref);
@@ -73,7 +73,7 @@ public class App extends Application {
         String token = Preferences.getToken();
         //salt
         String salt = Preferences.getSalt();
-        Log.d("Sonic:", "SV:"+server+", US:"+username+", TK"+token+", salt:"+salt);
+        Log.d("Sonic:", "SV:" + server + ", US:" + username + ", TK" + token + ", salt:" + salt);
         boolean isLowSecurity = Preferences.isLowScurity();
 
         SubsonicPreferences preferences = new SubsonicPreferences();

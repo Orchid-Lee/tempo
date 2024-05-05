@@ -55,17 +55,22 @@ public class MainActivity extends BaseActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         //初始化第一屏
+        //SplashScreen.installSplashScreen(this): This line initializes the splash screen for the activity. It uses the SplashScreen API introduced in Android 12 to display a splash screen while the app is loading.
         SplashScreen.installSplashScreen(this);
+        // This line applies dynamic colors to the activity if the feature is available. Dynamic colors allow the app to adapt its color scheme based on the user's wallpaper or system settings.
         DynamicColors.applyToActivityIfAvailable(this);
 
         super.onCreate(savedInstanceState);
         //界面填充
+        //This line inflates the layout for the activity using data binding. It creates an instance of the ActivityMainBinding class, which provides access to the views in the layout.
         bind = ActivityMainBinding.inflate(getLayoutInflater());
+        //This line gets the root view of the layout.
         View view = bind.getRoot();
         setContentView(view);
 
+        //The ViewModelProvider helps manage the lifecycle of the ViewModel and ensures that it is retained across configuration changes.
         mainViewModel = new ViewModelProvider(this).get(MainViewModel.class);
-
+        //monitor changes in the network connectivity status.
         connectivityStatusBroadcastReceiver = new ConnectivityStatusBroadcastReceiver(this);
         connectivityStatusReceiverManager(true);
 
@@ -262,6 +267,7 @@ public class MainActivity extends BaseActivity {
 
     private void goToLogin() {
         bottomSheetBehavior.setState(BottomSheetBehavior.STATE_HIDDEN);
+        //未登录隐藏底部TAB栏
         setBottomNavigationBarVisibility(false);
         setBottomSheetVisibility(false);
 

@@ -5,6 +5,7 @@ import android.content.Intent;
 import android.net.Uri;
 import android.os.Bundle;
 import android.os.Handler;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -255,6 +256,9 @@ public class HomeTabMusicFragment extends Fragment implements ClickCallback {
         });
     }
 
+    /**
+     * 离线星标文件
+     */
     private void initSyncStarredView() {
         if (Preferences.isStarredSyncEnabled()) {
             homeViewModel.getAllStarredTracks().observeForever(new Observer<List<Child>>() {
@@ -273,6 +277,7 @@ public class HomeTabMusicFragment extends Fragment implements ClickCallback {
                         if (!toSync.isEmpty()) {
                             bind.homeSyncStarredCard.setVisibility(View.VISIBLE);
                             bind.homeSyncStarredTracksToSync.setText(String.join(", ", toSync));
+                            Log.d(TAG, "downloading(): " + songs);
                         }
                     }
 
@@ -693,7 +698,9 @@ public class HomeTabMusicFragment extends Fragment implements ClickCallback {
 
     private void initHomeReorganizer() {
         final Handler handler = new Handler();
-        final Runnable runnable = () -> { if (bind != null) bind.homeSectorRearrangementButton.setVisibility(View.VISIBLE); };
+        final Runnable runnable = () -> {
+            if (bind != null) bind.homeSectorRearrangementButton.setVisibility(View.VISIBLE);
+        };
         handler.postDelayed(runnable, 5000);
 
         bind.homeSectorRearrangementButton.setOnClickListener(v -> {
